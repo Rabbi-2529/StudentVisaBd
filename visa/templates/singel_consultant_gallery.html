@@ -1,0 +1,226 @@
+
+{% extends "consultant_base.html" %}
+{% block custom_css %}
+
+{% load static %}
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&amp;display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&amp;display=swap" rel="stylesheet">
+
+<!-- Stylesheets -->
+<link href={% static "assets/css/font-awesome-all.css"%} rel="stylesheet">
+<link href={% static "assets/css/flaticon.css"%} rel="stylesheet">
+<link href={% static "assets/css/owl.css"%} rel="stylesheet">
+<link href={% static "assets/css/bootstrap.css"%} rel="stylesheet">
+<link href={% static "assets/css/jquery.fancybox.min.css"%} rel="stylesheet">
+<link href={% static "assets/css/animate.css"%} rel="stylesheet">
+<link href={% static "assets/css/color/theme-color.css"%} id="jssDefault" rel="stylesheet">
+<link href={% static "assets/css/switcher-style.css"%} rel="stylesheet">
+{% comment %} <link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/responsive.css" rel="stylesheet"> {% endcomment %}
+<style>
+    /* Style for the modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 50px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.9);
+    }
+  
+    /* Style for the modal content */
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+      max-height: 80%;
+    }
+  
+    /* Style for the close button */
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  
+    /* Style for the overlay background when the modal is open */
+    .modal-content {
+      animation-name: zoom;
+      animation-duration: 0.6s;
+    }
+  
+    @keyframes zoom {
+      from {
+        transform: scale(0.1);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 50px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.9);
+  }
+  
+  /* Style for the modal content */
+  .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+      max-height: 80%;
+  }
+  
+  /* Style for the close button */
+  .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+  }
+</style>
+
+{% endblock custom_css %}
+
+{% block content %}
+
+ 
+
+
+
+        <!--Page Title-->
+        {% comment %} <section class="page-title" style="background-image: url({% static 'assets/images/background/page-title.jpg'%});">
+            <div class="auto-container">
+                <div class="content-box">
+                    <div class="title-box">
+                        <h1>Consultant List</h1>
+                        <div class="dotted-box">
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                        </div>
+                    </div>
+                    <ul class="bread-crumb clearfix">
+                        <li><i class="flaticon-home-1"></i><a href="index.html">Home</a></li>
+                        <li>List</li>
+                    </ul>
+                </div>
+            </div>
+        </section> {% endcomment %}
+        <!--End Page Title-->
+
+
+        <!-- team-section -->
+        <div class="container">
+            <section class="page-title " style="background-image: url({% static 'assets/images/background/page-title.jpg' %});">
+                <div class="auto-container">
+                    <div class="content-box my-2">
+                        <div class="title-box">
+                            <h1>Gallery</h1>
+                            <div class="dotted-box">
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                            </div>
+                        </div>
+                        <ul class="bread-crumb clearfix">
+                            <li><i class="flaticon-home-1"></i><a href="{% url 'singel_consultant_page' consultant_id=consultant.id %}">Home</a></li>
+                            <li>{{consultant.company_name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <!--End Page Title-->
+    
+    
+            <!-- about-section -->
+            <section class="news-section sec-pad-2">
+                <div class="auto-container">
+                    <div class="row clearfix">
+                        {% for image in consultant_images %}
+                        <div class="col-lg-4 col-md-6 col-sm-12 news-block">
+                          <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                            <div class="inner-box">
+                                <!-- Add the image-box class to the figure element -->
+                                <figure class="image-box">
+                                    <img src="{{ image.image.url }}" alt="{{ consultant.company_name }}">
+                                </figure>
+                                <div class="lower-content">
+                                    <h3>{{ image.caption }}</h3>
+                                    <!-- Add other content if needed -->
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div id="imageModal" class="modal">
+                          <!-- Close button -->
+                          <span class="close">&times;</span>
+                          <!-- Modal content (the image) -->
+                          <img class="modal-content" id="modalImage">
+                      </div>
+                    {% endfor %}
+               
+                    </div>
+                </div>
+            </section>
+            <!-- team-section end -->
+        </div>
+
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    // Get the modal
+    var modal = document.getElementById('imageModal');
+  
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var images = document.querySelectorAll('.news-block-one .image-box img');
+    var modalImg = document.getElementById('modalImage');
+    
+    images.forEach(function(image) {
+      image.onclick = function() {
+        modal.style.display = 'block';
+        modalImg.src = this.src;
+      };
+    });
+  
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName('close')[0];
+  
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = 'none';
+    };
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    };
+  </script>
+
+{% endblock js %}

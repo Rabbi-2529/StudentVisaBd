@@ -1,0 +1,51 @@
+{% extends 'consultant_base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- End Mobile Menu -->
+
+<style>
+    .cover-image-single {
+        position: relative;
+        display: flex;
+        align-items: center; /* Center vertically */
+        max-width: 1200px;
+        height: 500px;
+        background-size: cover;
+        background-position: center;
+        /* Set the background image URL here */
+        background-image: url('{% if customize and customize.image %}{{ customize.image.url }}{% else %}{% static 'assets/new-assets/banner/banner-6.jpg' %}{% endif %}');
+    }
+
+    .cover-image-single::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+</style>
+
+<div class="container">
+    <!-- banner-section -->
+    <section class="banner-section my-4 style-two">
+        <div class="cover-image-single col-lg-8 col-md-7 col-12">
+            <div class="welcome-text-div px-4">
+                <h1>
+                    <span class="welcome-text-heading">
+                        {% if consultant.about %}
+                            {{ consultant.about|safe }}
+                        {% else %}
+                            Welcome to {{ consultant.company_name }}
+                        {% endif %}
+                    </span>
+                </h1>
+                <p class="mt-3"><span class="welcome-text">{{ consultant.consultant_customizes }} </span></p>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,66 @@
+{% extends "roottemplates/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title mb-4">Creat Root</h4>
+
+            {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post" action="{% url 'create_root' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+              <label for="full_name">Full Name:</label>
+              <input type="text" name="full_name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="text" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="user_role">User Role:</label>
+                <select name="user_role" class="form-control" required>
+                    <option value="" selected disabled>Select User</option>
+                    <option value="2">Root One</option>
+                    <option value="3">Root Two</option>
+                    <option value="4">Root Three</option>
+                    <!-- Add other user roles as needed -->
+                </select>
+            </div>
+            
+
+            <div class="form-group">
+              <label for="phone">Phone:</label>
+              <input type="text" name="phone" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Root User</button>
+          </form>
+
+            <!-- Include CKEditor library -->
+       
+
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

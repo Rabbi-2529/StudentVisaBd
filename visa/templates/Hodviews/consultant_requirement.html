@@ -1,0 +1,44 @@
+{% extends "Hodviews/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title mb-4">Add Your Requirement</h4>
+
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+         
+
+            <form method="post" action="{% url 'consultant_requirement' %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="consultant_requirement">Requirement:</label>
+                <!-- Add CKEditor textarea -->
+                <textarea id="consultant_requirement" name="consultant_requirement" required>{% if consultant_details %}{{ consultant_details.consultant_requirement|default:'' }}{% endif %}</textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Update Requirement</button>
+            </form>
+
+            <!-- Include CKEditor library -->
+            <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+            <script>
+              CKEDITOR.replace('consultant_requirement');
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

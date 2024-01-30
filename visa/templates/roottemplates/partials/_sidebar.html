@@ -1,0 +1,108 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'root_home' %}">
+        <i class="mdi mdi-grid-large menu-icon"></i>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item nav-category">Forms and Datas</li>
+   
+    
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false"
+        aria-controls="form-elements">
+        <i class="menu-icon mdi mdi-image"></i>
+        
+        <span class="menu-title">Appearance</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="form-elements">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" href={% url "root_customize" %}>Customize</a></li>
+          <li class="nav-item"><a class="nav-link" href={% url "offer_letters" %}>Offer Latter</a></li>
+        </ul>
+      </div>
+     
+     
+    </li>
+ 
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+             <i class="menu-icon mdi mdi-table"></i>
+             <span class="menu-title">Countries</span>
+             <i class="menu-arrow"></i>
+           </a> 
+           <div class="collapse" id="tables">
+             <ul class="nav flex-column sub-menu">
+               <li class="nav-item"> <a class="nav-link" href="{% url 'root_countries'%}">Show All Country</a></li>
+             </ul>
+           </div>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+            <i class="menu-icon mdi mdi-airplane-takeoff"></i>
+            <span class="menu-title">Scholarship</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="charts">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href={% url "consultant_wise_root" %}>Consultant Wise</a></li>
+              <li class="nav-item"> <a class="nav-link" href={% url "country_wise_scholarship_list" %}>Country Wise</a></li>
+              <li class="nav-item"> <a class="nav-link" href={% url "university_wise" %}>University Wise</a></li>
+            </ul>
+          </div>
+        </li>
+    
+
+    <li class="nav-item nav-category">Page Design</li>
+  
+   
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        
+        <i class="menu-icon mdi mdi-account"></i>
+        <span class="menu-title">Users</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="ui-basic">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href={% url "root_users_list" %}>User Admin</a></li>
+          <li class="nav-item"> <a class="nav-link" href={% url "root_consultant_list" %}>Consultant</a></li>
+          <li class="nav-item"> <a class="nav-link" href={% url "root_student_list" %}>Student</a></li>
+          {% comment %} <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/dropdowns.html">Dropdowns</a></li>
+          <li class="nav-item"> <a class="nav-link" href="../pages/ui-features/typography.html">Typography</a></li> {% endcomment %}
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#singel" aria-expanded="false" aria-controls="charts">
+        <i class="menu-icon mdi mdi-currency-usd"></i>
+        <span class="menu-title">Accounting</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="singel">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href={% url "consultant_credit_balance" %}>Debit/Credit</a></li>
+          <li class="nav-item"> <a class="nav-link" href={% url "consultant_rates" %}>Consultant Rate</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item nav-category">Student</li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#auth"aria-expanded="false" aria-controls="auth">
+        <i class="menu-icon mdi mdi-account-circle-outline"></i>
+        <span class="menu-title">Contact</span>
+        <i class="menu-arrow"></i>
+      </a>
+     <div class="collapse" id="auth">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href={% url 'add_address'%}> Address </a></li>
+        </ul>
+      </div> 
+    </li>
+
+ 
+  </ul>
+</nav>

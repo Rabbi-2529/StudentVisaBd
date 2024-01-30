@@ -1,0 +1,510 @@
+{% extends "Hodviews/base.html" %}
+{% load static %}
+
+{% block custom_css %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" integrity="sha512-8RxmFOVaKQe/xtg6lbscU9DU0IRhURWEuiI0tXevv+lXbAHfkpamD4VKFQRto9WgfOJDwOZ74c/s9Yesv3VvIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" integrity="sha512-d0olNN35C6VLiulAobxYHZiXJmq+vl+BGIgAxQtD5+kqudro/xNMvv2yIHAciGHpExsIbKX3iLg+0B6d0k4+ZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ 
+<style>
+    .custom-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        border: 1px solid #ddd; /* Add border to table cells */
+        padding: 8px;
+        text-align: left;
+    }
+
+    .custom-table th {
+        background-color: #f2f2f2; /* Add background color to header cells */
+    }
+
+    .lead-table .btn-info {
+        font-size: 16px; /* Increase font size */
+        padding: 10px 15px; /* Adjust padding */
+    }
+
+    .lead-btn.active {
+        background-color: #130e6d;
+    }
+    .alert-danger {
+        color: red !important;
+        background-color: #f8d7da !important;
+        border: 1px solid #f5c6cb !important;
+        border-radius: .25rem !important;
+        padding: .75rem 1.25rem !important;
+        margin-bottom: 1rem !important;
+        font-size: 1.2em !important; /* Adjust the font size as needed */
+    }
+</style>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10"></link>
+{% endblock custom_css %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Your Student List</h4>
+                    <!-- Lead Buttons -->
+                    <div class="mb-3">
+                        <button class="btn btn-primary lead-btn active" data-lead="0">My Lead</button>
+                        <button class="btn btn-primary lead-btn" data-lead="1">First Lead</button>
+                        <button class="btn btn-primary lead-btn" data-lead="2">Second Lead</button>
+                        <button class="btn btn-primary lead-btn" data-lead="3">Third Lead</button>
+                        <button class="btn btn-primary lead-btn" data-lead="4">Fourth Lead</button>
+                        <button class="btn btn-primary lead-btn" data-lead="5">Fifth Lead</button>
+                    </div>
+                    <!-- Student Tables -->
+                    <div class="lead-tables">
+                        <!-- My Lead Table -->
+                        <div class="lead-table lead-0" style="display: none;">
+                            <table id="studentList_0" class="custom-table table table-bordered">
+                                <!-- Include your table headers here -->
+                                <thead>
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Name</th>
+                                        <th>Location</th>
+                                        <th>Target Country</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if my_lead_included %}
+                                        {% for lead in my_lead_included %}
+                                            <tr>
+                                                <td>{{ lead.id }}</td>
+                                                <td>{{ lead.full_name }}</td>
+                                                <td>{{ lead.address }}</td>
+                                                <td>{{ lead.country_name }}</td>
+                                                <td>
+                                                    {% if lead.id >= 1 and lead.id <= 5 %}
+                                                        <button class="btn btn-info view-btn"
+                                                                data-toggle="modal"
+                                                                data-target="#studentDetailsModalmt_{{ lead.id }}"
+                                                                data-lead="{{ lead.id }}"
+                                                                data-student-id="{{ lead.id }}">
+                                                            View
+                                                        </button>
+                                                    {% else %}
+                                                        <!-- Render an alternative content or no content based on your needs -->
+                                                        <span>Invalid Lead ID</span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+                        <!-- Other Lead Tables -->
+                        {% for lead in "12345" %}
+                            <div class="lead-table lead-{{ lead }}" style="display: none;">
+                                <table id="studentList_{{ lead }}" class="custom-table table table-bordered">
+                                    <!-- Include your table headers here -->
+                                    <thead>
+                                        <tr>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Location</th>
+                                            <th>Target Country</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for student_level in student_levels %}
+                                            {% if student_level.level == lead|add:"0" %}
+                                                <tr>
+                                                    <td>{{ student_level.student.id }}</td>
+                                                    <td>{{ student_level.student.full_name }}{% if student_level.is_favorite %}
+                                                        <span style="color: gold;">★</span>
+                                                    {% endif %}</td>
+                                                    <td>{{ student_level.student.address }}</td>
+                                                    <td>{{ student_level.student.countries.first.country_name  }}</td>
+                                                    <td>
+                                                        <button class="btn btn-info view-btn"
+                                                                data-toggle="modal"
+                                                                data-target="#studentDetailsModal_{{ student_level.student.id }}"
+                                                                data-lead="{{ student_level.level }}"
+                                                                data-student-id="{{ student_level.student.id }}">
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% for lead in my_lead_included %}
+<div class="modal fade" id="studentDetailsModalmt_{{ lead.id }}" tabindex="-1" role="dialog" aria-labelledby="studentDetailsModalmtTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentDetailsModalmtTitle">{{ lead.full_name }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                {% if lead.error %}
+                    <!-- Display error message -->
+                    <div class="alert alert-danger" role="alert" style="font-size: 18px; color: red; background-color: #f8d7da; border-color: #f5c6cb; margin-bottom: 15px; padding: 15px; border-radius: 5px;">
+                        {{ lead.error }}
+                    </div>
+                {% else %}
+                    <!-- Student details section -->
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Name:</th>
+                                <td>{{ lead.full_name }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email:</th>
+                                <td>{{ lead.email }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Phone:</th>
+                                <td>{{ lead.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Gender:</th>
+                                <td>{% if lead.gender == "1" %}
+                                    Male
+                                {% elif lead.gender == 0 %}
+                                    Female
+                                {% else %}
+                                    Unknown
+                                {% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Address:</th>
+                                <td>{{ lead.address }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+
+
+
+
+
+
+<!-- Bootstrap Modal -->
+{% for student_level in student_levels %}
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="studentDetailsModal_{{ student_level.student.id }}" tabindex="-1" role="dialog" aria-labelledby="studentDetailsModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="studentDetailsModalTitle">{{ student_level.student.full_name }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()" >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    {% if error_message %}
+                        <!-- Display error message -->
+                        <div class="alert alert-danger" role="alert" style="font-size: 18px; color: red; background-color: #f8d7da; border-color: #f5c6cb; margin-bottom: 15px; padding: 15px; border-radius: 5px;">
+                            {{ error_message }}
+                        </div>
+                    {% else %}
+
+                    <!-- Student details section -->
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Name:</th>
+                                <td id="studentFullName"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email:</th>
+                                <td id="studentEmail"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Phone:</th>
+                                <td id="studentPhone"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Gender:</th>
+                                <td id="studentGender"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Address:</th>
+                                <td id="studentAddress"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button
+ 
+                        type="button"
+                        
+                        class="btn btn-danger"
+                        
+                        data-dismiss="modal"
+                        
+                        onclick="window.location.reload()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+
+{% endblock content %}
+
+{% block custom_js %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    $(document).ready(function () {
+        // Function to initialize DataTable for a given lead
+        
+        function initializeLeadTable(lead) {
+            $(`#studentList_${lead}`).DataTable({
+                dom: 'Bfrtip',
+                buttons: [],
+                columns: [
+                    { data: 'id' },  // Assuming 'id' is a direct attribute of student_level.student
+                    { data: 'full_name' },
+                    { data: 'address' },
+                    { data: 'country_name' },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return '<button class="btn btn-info view-btn" data-toggle="modal" data-target="#studentDetailsModal_' +
+                                row.id + '" data-lead="' + lead + '" data-student-id="' + row.id + '">View</button>';
+                        }
+                    },
+                ],
+            });
+        }
+        
+
+        // Initialize DataTable for 'My Lead' when the page loads
+
+        for (let lead = 1; lead <= 5; lead++) {
+            initializeLeadTable(lead);
+        }
+    
+        // jQuery script to handle lead buttons and show/hide tables
+        const leadButtons = document.querySelectorAll(".lead-btn");
+        leadButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+                // Remove the 'active' class from all lead buttons
+                leadButtons.forEach((btn) => {
+                    btn.classList.remove("active");
+                });
+
+                // Add the 'active' class to the clicked button
+                this.classList.add("active");
+
+                const selectedLead = this.getAttribute("data-lead");
+                const selectedTable = document.querySelector(`.lead-${selectedLead}`);
+                const tables = document.querySelectorAll(".lead-table");
+                tables.forEach((table) => {
+                    table.style.display = "none";
+                });
+                selectedTable.style.display = "block";
+
+                // Update 'My Lead' table when a lead button is clicked
+                if (selectedLead === "0") {
+                    updateMyLeadTable();
+                }
+            });
+        });
+            let reloadPage = false;
+             const viewButtons = document.querySelectorAll(".view-btn");
+
+        viewButtons.forEach((button) => {
+            $(button).off("click").on("click", function (event) {
+                event.preventDefault();
+
+                const lead = this.getAttribute("data-lead");
+                const studentId = this.getAttribute("data-student-id");
+
+                // Disable the click event to ensure it's handled only once
+                $(button).off("click");
+
+                // Close any existing open modals
+                $('.modal').modal('hide');
+
+                // Make an AJAX request to fetch student details
+                $.ajax({
+                    url: `/update-balance/${lead}/${studentId}/`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.error) {
+                            // Handle server-side error
+                            handleServerError(response.error, studentId);
+                        } else if (response && response.student_level && response.student_level.student) {
+                            // Update the modal content with student details
+                            const student = response.student_level.student;
+
+                            // Set the correct modal ID dynamically
+                            const modalId = `#studentDetailsModal_${student.id}`;
+                            const modal = $(modalId);
+
+                            // Check if the modal exists
+                            if (modal.length) {
+                                // Update the modal title
+                                $(`${modalId} .modal-title`).text(`Student : ${student.full_name}`);
+
+                                // Display other student details in the modal
+                                $(`${modalId} #studentFullName`).text(`${student.full_name || 'N/A'}`);
+                                $(`${modalId} #studentEmail`).text(` ${student.email || 'N/A'}`);
+                                $(`${modalId} #studentPhone`).text(`${student.phone || 'N/A'}`);
+                                $(`${modalId} #studentGender`).text(`${student.gender === 0 ? 'Male' : 'Female'}`);
+                                $(`${modalId} #studentAddress`).text(`${student.address || 'N/A'}`);
+
+                                // Show the modal
+                                modal.modal('show');
+
+                                console.log('Fetched Student Details:', student);
+                            } else {
+                                console.error('Modal not found:', modalId);
+                            }
+                        } else {
+                            console.error('Invalid response format:', response);
+                        }
+                    },
+                    error: function (error) {
+                        // Handle AJAX request error
+                        handleServerError('Error fetching student details. Please try again later.', studentId);
+                    }
+                });
+            });
+        });
+
+        function handleServerError(errorMessage, studentId) {
+            const modalId = `#studentDetailsModal_${studentId}`;
+            const modal = $(modalId);
+
+            if (modal.length) {
+                // Update the modal title
+                $(`${modalId} .modal-title`).text('Error');
+
+                // Display the error message in the modal body
+                $(`${modalId} .modal-body`).html('<h2 style="color:red;">' + errorMessage + '</h2>');
+
+                // Show the modal
+                modal.modal('show');
+            } else {
+                console.error('Modal not found:', modalId);
+            }
+        }
+
+        $('.modal').on('shown.bs.modal', function () {
+            // Check if the modal has the class 'show'
+            if ($(this).hasClass('show')) {
+                // Your custom code here
+                console.log('Modal is shown');
+                $(document).on('click', function (event) {
+                    if (!$(event.target).closest('.modal-dialog').length) {
+                        // Clicked outside modal-dialog, reload the page
+                        console.log('Modal clicked outside mod')
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+        
+    
+        // Add this code to reload the page after the modal is closed
+        $('#studentDetailsModal').on('hidden.bs.modal', function () {
+            if (reloadPage) {
+                location.reload();
+            }
+        });
+      
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        // Assuming you have included the DataTables library script
+    
+        // Initialize DataTable for 'My Lead'
+        $('#studentList_0').DataTable({
+            dom: 'Bfrtip',
+            buttons: [],  // Add buttons if needed
+            columns: [
+                { data: 'id' },  // Assuming 'id' is a direct attribute of lead
+                { data: 'full_name' },
+                { data: 'address' },
+                { data: 'country_name' },
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        // Render the "View" button with appropriate data attributes
+                        return '<button class="btn btn-info view-btn"'
+                            + ' data-toggle="modal"'
+                            + ' data-target="#studentDetailsModalmt_' + row.id + '"'
+                            + ' data-lead="' + row.id + '"'
+                            + ' data-student-id="' + row.id + '">'
+                            + ' View'
+                            + '</button>';
+                    }
+                },
+            ],
+        });
+    });
+</script>
+
+
+{% endblock custom_js %}

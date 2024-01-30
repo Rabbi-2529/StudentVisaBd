@@ -1,0 +1,102 @@
+{% extends 'consultant_base.html' %} {% load static %}
+{% block custom_css %}
+<style>
+    b, strong {
+        font-weight: bolder;
+        font-size: 30px !important;
+    }
+
+
+
+    ol > li {
+        counter-increment: my-counter;
+        margin-bottom: 10px;
+    }
+
+    ol > li::before {
+        content: counter(my-counter) '. ';
+        font-weight: bold; /* Make the marker bold */
+        margin-right: 5px;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    ul > li {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+
+</style>
+
+{% endblock custom_css %}
+{% block content %}
+        <!-- End Mobile Menu -->
+
+
+        <div class="container">
+            <section class="page-title" style="background-image: url({% static 'assets/images/background/page-title.jpg' %});">
+                <div class="auto-container">
+                    <div class="content-box">
+                        <div class="title-box">
+                            <h1>Requirements</h1>
+                            <div class="dotted-box">
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                            </div>
+                        </div>
+                        <ul class="bread-crumb clearfix">
+                            <li><i class="flaticon-home-1"></i><a href={% url 'singel_consultant_page' consultant_id=consultant.id %}>Home</a></li>
+                            <li>Requirements for {{consultant.company_name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <!--End Page Title-->
+    
+    
+            <!-- about-section -->
+            <section class="about-section">
+                <div class="pattern-layer" style="background-image: url({% static 'assets/images/shape/pattern-1.png' %});"></div>
+                <div class="auto-container">
+                    <div class="row align-items-center clearfix">
+                        <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                            <div id="image_block_1">
+                                <div class="image-box">
+                                    <figure class="image"><img src={% static "assets/images/5109476.png" %} alt=""></figure>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                            <div id="content_block_1">
+                                <div class="content-box">
+                                    <div class="sec-title">
+                                        
+                                        <h2>Here is our Requirements</h2>
+                                        <div class="dotted-box">
+                                            <span class="dotted"></span>
+                                            <span class="dotted"></span>
+                                            <span class="dotted"></span>
+                                        </div>
+                                    </div>
+                               
+                                    <div class="bold-text">
+                                        {{ consultant_details.consultant_requirement|safe }}
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+    </div>
+
+        {% endblock content %}
+        

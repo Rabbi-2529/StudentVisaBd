@@ -1,0 +1,260 @@
+
+{% extends 'consultant_base.html' %}
+{% load static %}
+{% block custom_css %}
+<link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&amp;display=swap" rel="stylesheet">
+<link href="{% static 'assets/css/font-awesome-all.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/flaticon.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/owl.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/jquery.fancybox.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/animate.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/color/theme-color.css' %}" id="jssDefault" rel="stylesheet">
+<link href="{% static 'assets/css/switcher-style.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/feedback.css' %}" rel="stylesheet">
+
+
+
+{% endblock custom_css %}
+{% block content %}
+    <div class="container">
+        <!--Page Title-->
+        <section class="page-title" style="background-image: url({% static 'assets/images/background/page-title-6.jpg'%});">
+            <div class="auto-container">
+                <div class="content-box">
+                    <div class="title-box">
+                        <h1>Feedback</h1>
+                        <div class="dotted-box">
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                        </div>
+                    </div>
+                    <ul class="bread-crumb clearfix">
+                        <li><i class="flaticon-home-1"></i><a href={% url 'singel_consultant_page' consultant_id=consultant.id %}>Home</a></li>
+                        <li>Contact Us</li>
+                        <li>Feedback</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!--End Page Title-->
+
+
+        <!-- contact-page-section -->
+        <section class="contact-page-section">
+            <div class="auto-container">
+                <div class="contact-form-inner">
+                    <div class="sec-title centred">
+                        <h2>Have Any Thought!</h2>
+                        <div class="dotted-box">
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                        </div>
+                    </div>
+                    <div class="form-inner">
+                        <form method="POST" action="" id="contact-form" class="default-form"> 
+                            <div class="row clearfix">
+                                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                    <input type="text" name="username" placeholder="Your Name " required="">
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                    <input type="email" name="email" placeholder="Email address" required="">
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                
+                                    <input type="text" name="phone" id="phone" required="" placeholder="Phone No." maxlength="11">
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <input type="text" name="subject" required="" placeholder="Subject">
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                    <div class="select-box">
+                                        <select class="wide" name="country">
+                                           <option data-display="Select Country">Select Country</option>
+                                           {% for country in countries %}
+                                            <option value="{{ country.country_id }}">{{ country.country_name }}</option>
+                                           {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                    <textarea name="message" placeholder="Message"></textarea>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn centred">
+                                    <button class="theme-btn-two" type="submit" name="submit-form"><i class="flaticon-send"></i>Send</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- contact-page-section end -->
+    </div>
+
+    <div id="popup-container" class="popup-container">
+        <div class="popup d-flex justify-content-center">
+            <img src="{% static 'assets/images/404-tick.png' %}" alt="" class="success-tick">
+            <div class="registration-success-div py-4">
+                <p class="mb-2"><span class="successful-text text-center">Successfully Send</span></p>
+            </div>
+            <span class="close-icon"><i class="fa-solid fa-xmark fa-xl" style="color: #dedede;"></i></span>
+        </div>
+    </div>
+
+
+    {% endblock content %}
+
+
+    {% block js %}
+        <script src={% static "assets/js/jquery.js"%}></script>
+        <script src={% static "assets/js/popper.min.js"%}></script>
+        <script src={% static "assets/js/bootstrap.min.js"%}></script>
+        <script src={% static "assets/js/owl.js"%}></script>
+        <script src={% static "assets/js/wow.js"%}></script>
+        <script src={% static "assets/js/validation.js"%}></script>
+        <script src={% static "assets/js/jquery.fancybox.js"%}></script>
+        <script src={% static "assets/js/TweenMax.min.js"%}></script>
+        <script src={% static "assets/js/appear.js"%}></script>
+
+
+
+        
+        <script src={% static "assets/js/jquery.nice-select.min.js"%}></script>
+        <script src={% static "assets/js/jQuery.style.switcher.min.js"%}></script>
+
+        <!-- map script -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-CE0deH3Jhj6GN4YvdCFZS7DpbXexzGU"></script>
+        <script src="{% static 'assets/js/gmaps.js' %}"></script>
+        <script src={% static "assets/js/map-helper.js"%}></script>
+
+        <!-- main-js -->
+        <script src={% static "assets/js/script.js"%}></script>
+
+        <script>
+            // fetch data to save the data
+            $('#contact-form').on('submit', function(event){
+                event.preventDefault();
+                var formData = new FormData(this);
+                var consultantId = parseInt('{{ consultant.id }}')
+                console.log('consultantId: ', consultantId);
+                console.log('consultantId type: ', typeof(consultantId));
+
+                formData.append('consultantId', consultantId)
+                
+                fetch('/save_feedback/', {
+                    method: 'POST',
+                    //body: JSON.stringify(data),
+                    body: formData,
+                    headers: {
+                        'x-CSRFToken': '{{csrf_token}}',
+                        //'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response data, e.g., show a success message
+                    console.log('data: ', data);
+
+                    if (data.success) {
+                        // Redirect to the URL provided in the response
+                        //window.location.href = data.redirect_url;
+                        console.log('data.success: ', data.success)
+                        $('#popup-container').addClass('show');
+
+                        setTimeout(function(){
+                            $('#popup-container').removeClass('show');
+                        }, 1000)
+                    }
+                    
+                    else if (data.error) {
+                        console.log('errors: ', data.error);
+                        $('#message-text').text(data.error);
+                        $('#error-message-div').addClass('error-message-show');
+                    }
+                })
+                .catch(error => {
+                    // Handle errors, e.g., show an error message
+                    console.error('Error:', error);
+                });
+            })
+        </script>
+
+        <script>
+            function validateForm() {
+                var requiredFields = [
+                    { field: 'name', message: 'Your Name is required.' },
+                    { field: 'email', message: 'Email address is required.' },
+                    { field: 'phone', message: 'Phone Number is required.' },
+                    { field: 'subject', message: 'Subject is required.' },
+                    { field: 'category', message: 'Category is required.' },
+                    { field: 'message', message: 'Message is required.' }
+                ];
+                var isValid = true;
+        
+                requiredFields.forEach(function (item) {
+                    var value = $('#' + item.field).val();
+                    if (!value) {
+                        $('#' + item.field).addClass('error-border');
+                        // Set the error message text
+                        $('#' + item.field + '_error').text(item.message);
+                        isValid = false;
+                    } else {
+                        $('#' + item.field).removeClass('error-border');
+                        // Clear the error message
+                        $('#' + item.field + '_error').text('');
+                    }
+                });
+        
+                if (!isValid) {
+                    // Use a more user-friendly method than alert, e.g., displaying messages on the page
+                    alert('Please fill in all required fields.');
+                }
+            }
+        </script>
+
+        <script>
+            $("#phone").on("input", function() {
+                var phone = $(this).val();
+                var numericPhone = phone.replace(/\D/g, ""); // Remove non-digit characters
+        
+                $(this).val(numericPhone); // Update the input value with the numeric version
+        
+                // Check if the phone number length is not 11
+                if (numericPhone.length !== 11) {
+                    $(".phone_error").remove();
+                    $("<span class='phone_error' style='padding: 5px;color: red;font-weight: bold;'>Phone Number must be 11 digits</span>").insertAfter("#phone");
+                    $("#phone").addClass("error-field");
+                    return;
+                }
+        
+                // Check if the phone number starts with the allowed prefixes
+                var allowedPrefixes = ["019", "018", "017", "016", "013", "014"];
+                var isValidPrefix = false;
+        
+                for (var i = 0; i < allowedPrefixes.length; i++) {
+                    if (numericPhone.startsWith(allowedPrefixes[i])) {
+                        isValidPrefix = true;
+                        break;
+                    }
+                }
+        
+                if (!isValidPrefix) {
+                    $(".phone_error").remove();
+                    $("<span class='phone_error' style='padding: 5px;color: red;font-weight: bold;'>Invalid Format</span>").insertAfter("#phone");
+                    $("#phone").addClass("error-field");
+                    return;
+                }
+        
+                // If the input is valid, remove any error messages and styling
+                $(".phone_error").remove();
+                $("#phone").removeClass("error-field");
+            });
+        </script>
+    {% endblock js %}

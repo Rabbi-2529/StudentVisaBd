@@ -1,0 +1,555 @@
+{% extends 'studentinfo/base.html' %}
+
+{% load static %}
+
+{% block custom_css %}
+<style>
+    .select2-container {
+        width: 100% !important;
+        margin-bottom: 15px !important; /* Optional: Add some margin for spacing */
+      }
+    
+      /* Style the selection area */
+      .select2-selection {
+        height: 38px !important;
+        border: 1px solid #ced4da !important;
+        border-radius: 4px !important;
+        background-color: #fff !important;
+      }
+    
+      /* Style the selected option */
+      .select2-selection__rendered {
+        line-height: 36px !important;
+        padding-left: 10px !important;
+        color: #495057 !important;
+      }
+    
+      /* Style the dropdown arrow */
+      .select2-selection__arrow {
+        top: 10px !important;
+      }
+    
+      /* Style the dropdown list */
+      .select2-dropdown {
+        border: 1px solid #ced4da !important;
+        border-radius: 4px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+      }
+    
+      /* Style the options in the dropdown */
+      .select2-results__option {
+        padding: 8px 10px !important;
+        color: #495057 !important;
+      }
+    
+      /* Style the highlighted option */
+      .select2-results__option--highlighted {
+        background-color: #007bff !important;
+        color: #fff !important;
+      }
+      .btn.btn-sm, .swal2-modal .swal2-buttonswrapper .btn-sm.swal2-styled, .ajax-upload-dragdrop .btn-sm.ajax-file-upload, .btn-group-sm > .btn, .swal2-modal .swal2-buttonswrapper .btn-group-sm > .swal2-styled, .ajax-upload-dragdrop .btn-group-sm > .ajax-file-upload {
+        font-size: 0.812rem;
+        border-radius: 6px;
+      }
+    
+
+    .emp-profile{
+        padding: 3%;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        border-radius: 0.5rem;
+        background: #fff;
+    }
+    .profile-img{
+        text-align: center;
+    }
+    .profile-img img{
+        width: 70%;
+        height: 100%;
+    }
+    .profile-img .file {
+        position: relative;
+        overflow: hidden;
+        margin-top: -20%;
+        width: 70%;
+        border: none;
+        border-radius: 0;
+        font-size: 15px;
+        background: #212529b8;
+    }
+    .profile-img .file input {
+        position: absolute;
+        opacity: 0;
+        right: 0;
+        top: 0;
+    }
+    .profile-head h5{
+        color: #333;
+    }
+    .profile-head h6{
+        color: #0062cc;
+    }
+    .profile-edit-btn{
+        border: none;
+        border-radius: 1.5rem;
+        width: 70%;
+        padding: 2%;
+        font-weight: 600;
+        color: #6c757d;
+        cursor: pointer;
+    }
+    .proile-rating{
+        font-size: 12px;
+        color: #818182;
+        margin-top: 5%;
+    }
+    .proile-rating span{
+        color: #495057;
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .profile-head .nav-tabs{
+        margin-bottom:5%;
+    }
+    .profile-head .nav-tabs .nav-link{
+        font-weight:600;
+        border: none;
+    }
+    .profile-head .nav-tabs .nav-link.active{
+        border: none;
+        border-bottom:2px solid #0062cc;
+    }
+    .profile-work{
+        padding: 14%;
+        margin-top: -15%;
+    }
+    .profile-work p{
+        font-size: 12px;
+        color: #818182;
+        font-weight: 600;
+        margin-top: 10%;
+    }
+    .profile-work a{
+        text-decoration: none;
+        color: #495057;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    .profile-work ul{
+        list-style: none;
+    }
+    .profile-tab label{
+        font-weight: 600;
+    }
+    .profile-tab p{
+        font-weight: 600;
+        color: #0062cc;
+    }
+</style>
+
+
+<!-- Include Select2 CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+
+<!-- Include Select2 JS -->
+
+{% endblock custom_css %}
+
+{% block content %}
+    <!-- Content for the page -->
+    <div class="container">
+        <section class="result-form">
+
+            <div class="container emp-profile">
+                <form method="post" id="profileForm" enctype="multipart/form-data" action="{% url 'edit_student_profile' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="profile-img">
+                                <img id="image-preview" src="{{ student_details.student_image.url }}" alt="Student Image">
+                                <div class="file btn btn-lg btn-primary">
+                                    Change Photo
+                                    <input type="file" name="student_image" id="file-input" onchange="previewImage(event)"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="profile-head">
+                                        <h5>
+                                            <h2>Edit Profile</h2>{{student.full_name}}
+                                        </h5>
+                                        {% comment %} <h6>
+                                            {{ student.get_user_type_display }}
+                                        </h6> {% endcomment %}
+                                      
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Result</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#password" role="tab" aria-controls="password" aria-selected="false">Password</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="profile-work">
+                    
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="tab-content profile-tab" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                            
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="full_name">Full Name</label>
+                                                     
+                                                        <input type="text" class="form-control" id="full_name" placeholder="Enter full name" name="full_name" value="{{ student.full_name }}" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="eMail">Email</label>
+                                                       
+                                                        <input type="email" class="form-control" id="student_email" name="student_email" placeholder="Enter email ID" value="{{ student.email }}" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="fatherName">Father's Name</label>
+                                                        <input type="text" class="form-control" id="fatherName" name="dets_fathername" placeholder="Enter father's name" value="{{ student_details.dets_fathername }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="motherName">Mother's Name</label>
+                                                        <input type="text" class="form-control" id="motherName" name="dets_mothername" placeholder="Enter mother's name" value="{{ student_details.dets_mothername }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="bloodGroup">Blood Group</label>
+                                                        <input type="text" class="form-control" id="bloodGroup" name="dets_bloodgroup" placeholder="Enter blood group" value="{{ student_details.dets_bloodgroup }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="nationality">Nationality</label>
+                                                        <input type="text" class="form-control" id="nationality" name="dets_nationality" placeholder="Enter nationality" value="{{ student_details.dets_nationality }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="phone">Phone</label>
+                                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number" value="{{ student.phone }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="dob">Date of Birth</label>
+                                                        <input type="date" class="form-control" id="dob" name="dets_dob" placeholder="Enter date of birth" value="{{ student_details.dets_dob|date:'Y-m-d' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <h6 class="mt-3 mb-2 text-primary">Address</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="district">District</label>
+                                                    <select class="form-control" id="district" name="district">
+                                                        {% for district in district %}
+                                                            <option value="{{ district.id }}" {% if district.id == student.district.id %}selected{% endif %}>{{ district.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="form-group">
+                                                    <label for="thana">Thana</label>
+                                                    <select class="form-control" id="district" name="district">
+                                                        {% for thana in thana %}
+                                                            <option value="{{ thana.id }}" {% if thana.id == student.thana.id %}selected{% endif %}>{{ thana.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="road">Road</label>
+                                                        <input type="text" class="form-control" id="address" placeholder="Enter State" value="{{ student.address }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="zIp">Zip Code</label>
+                                                        <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+                                                    </div>
+                                                </div>
+                                           </div>
+                                           <div class="row gutters">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <div class="text-right">
+                                                   
+                                                    <button type="submit" id="updateButton" name="updateButton" class="btn btn-primary">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+
+
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <!-- SSC Results -->
+                                    <h4>SSC Results</h4>
+                                    {% for result in results %}
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="sscBoard">Board</label>
+
+                                                <select class="form-control" id="sscBoard" name="sscBoard" value="{{ result.secondary_board }}">
+                                                    <option value="" selected="" disabled="" >Select One</option>
+                                                    <option value="barisal">Barisal</option>
+                                                    <option value="chittagong">Chittagong</option>
+                                                    <option value="comilla">Comilla</option>
+                                                    <option value="dhaka">Dhaka</option>
+                                                    <option value="dinajpur">Dinajpur</option>
+                                                    <option value="jessore">Jessore</option>
+                                                    <option value="mymensingh">Mymensingh</option>
+                                                    <option value="rajshahi">Rajshahi</option>
+                                                    <option value="sylhet">Sylhet</option>
+                                                    <option value="madrasah">Madrasah</option>
+                                                    <option value="tec">Technical</option>
+                                                    <option value="dibs">DIBS(Dhaka)</option>
+                                                </select>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="sscGPA">GPA</label>
+                                                <input type="text" class="form-control" id="sscGPA" name="sscGPA" placeholder="Enter SSC GPA" value="{{ result.secondary_result }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="sscPassingYear">Passing Year</label>
+                                                <input type="text" class="form-control" id="sscPassingYear" name="sscPassingYear" placeholder="Enter SSC Passing Year" value="{{ result.secondary_passing_year }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                
+                                    <!-- HSC Results -->
+                                    <h3>HSC Results</h3>
+                                    {% for result in results %}
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="hscBoard">Board</label>
+
+                                                <select class="form-control" id="hscBoard" value="{{ result.higher_board }}" placeholder="Enter HSC Board" name="hscBoard">
+                                                    <option value="" selected="" disabled="" >Select One</option>
+                                                    <option value="barisal">Barisal</option>
+                                                    <option value="chittagong">Chittagong</option>
+                                                    <option value="comilla">Comilla</option>
+                                                    <option value="dhaka">Dhaka</option>
+                                                    <option value="dinajpur">Dinajpur</option>
+                                                    <option value="jessore">Jessore</option>
+                                                    <option value="mymensingh">Mymensingh</option>
+                                                    <option value="rajshahi">Rajshahi</option>
+                                                    <option value="sylhet">Sylhet</option>
+                                                    <option value="madrasah">Madrasah</option>
+                                                    <option value="tec">Technical</option>
+                                                    <option value="dibs">DIBS(Dhaka)</option>
+                                                </select>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="hscGPA">GPA</label>
+                                                <input type="text" class="form-control" id="hscGPA" name="hscGPA" placeholder="Enter HSC GPA" value="{{ result.higher_result }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="hscPassingYear">Passing Year</label>
+                                                <input type="text" class="form-control" id="hscPassingYear" name="hscPassingYear" placeholder="Enter HSC Passing Year" value="{{ result.higher_passing_year }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="hscPassingYear">Passing Year</label>
+                                                <input type="text" class="form-control" id="hscPassingYear" name="hscPassingYear" placeholder="Enter HSC Passing Year" value="{{ result.higher_passing_year }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <div class="text-left">
+                                                <!-- Cancel Button -->
+                                         
+                                                <button type="submit" id="updateButton" name="updateButton" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                                    <div id="passwordMessageContainer"></div>
+                                    <!-- Password Fields -->
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="new_password">New Password</label>
+                                                <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Enter New Password">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="confirm_new_password">Confirm New Password</label>
+                                                <input type="password" class="form-control" id="confirm_new_password" name="confirm_new_password" placeholder="Confirm New Password">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="old_password">Old Password</label>
+                                                <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Enter Old Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <!-- Cancel and Update Buttons -->
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <div class="text-left">
+                                            
+                                                <button type="submit" id="updateButtonpassword" name="updateButtonpassword" class="btn btn-primary">Update Password</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <!-- Message Container for Password Update Status -->
+                                   
+                                </div>
+
+                                 </div>
+                        
+                           
+                                
+                                 
+                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>           
+            </div>
+        </section>
+    </div>
+    <br>
+{% endblock content %}
+{% block js %}
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
+<script>
+        
+    $('#district').select2();
+    $('#thana').select2();
+    $('#sscBoard').select2();
+    $('#hscBoard').select2();
+ 
+
+  
+
+    
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        // Click event handler for the Update Password button
+        $('#updateButtonpassword').on('click', function () {
+            // Perform password update logic here
+
+            // For demonstration purposes, assume success and show a success message
+            var isSuccess = true;
+
+            var messageContainer = $('#passwordMessageContainer');
+            var message = '';
+
+            if (isSuccess) {
+                // Password update successful
+                message = '<div class="alert alert-success" role="alert">Password updated successfully!</div>';
+            } else {
+                // Password update failed
+                message = '<div class="alert alert-danger" role="alert">Password update failed. Please check your inputs.</div>';
+            }
+
+            // Update the content of the message container
+            messageContainer.html(message);
+
+            // Optionally, you can clear the password input fields
+            $('#new_password, #confirm_new_password, #old_password').val('');
+        });
+
+        // Add code for the Cancel button click event if needed
+        $('#cancelButton').on('click', function () {
+            // Handle cancel button click event
+        });
+    });
+</script>
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('image-preview');
+    
+        const file = input.files[0];
+    
+        if (file) {
+            const reader = new FileReader();
+    
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            };
+    
+            reader.readAsDataURL(file);
+        } else {
+            // If no file is selected, you can set a default image or clear the preview
+            preview.src = "{{ student_details.student_image.url }}";
+        }
+    }
+    </script>
+    
+{% endblock js %}

@@ -1,0 +1,210 @@
+{% extends 'studentinfo/base.html' %}
+
+{% load static %}
+
+{% block custom_css %}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    .nav-tabs {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .nav-link.disabled {
+        color: #6c757d;
+        cursor: not-allowed;
+    }
+
+    .nav-link.active {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+    }
+
+    .tab-content {
+        margin-top: 10px;
+    }
+
+    #consultant {
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #007bff;
+    }
+
+    .search-input {
+        padding: 10px;
+        width: 250px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .search-button {
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        border: none;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .search-button:hover {
+        background-color: #0056b3;
+    }
+
+    .search-results {
+        margin-top: 20px;
+    }
+
+    .result-item {
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .action-button {
+        padding: 5px 10px;
+        background-color: #28a745;
+        color: #fff;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+    }
+    .action-button.danger {
+        background-color: #dc3545; /* Red color */
+        color: #fff; /* White text */
+        /* Add any other styles as needed */
+    }
+
+    .action-button:hover {
+        background-color: #dc3545;
+    }
+</style>
+{% endblock custom_css %}
+{% block content %}
+    <div class="container">
+        <section class="consultant-search">
+            <div class="container">
+                <h2>Your Favorite Consultants</h2>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SL</th>
+                                    <th scope="col">Consultant Name</th>
+                                    <th scope="col">Consultant Company</th>
+                                    <th scope="col">Status</th> <!-- Add this line for status -->
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in consultant_list %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ item.consultant.full_name }}</td>
+                                        <td><a href="{% url 'singel_consultant_page' consultant_id=item.consultant.id %}">{{ item.consultant.company_name }}</a></td>
+                                        <td>
+                                            {% if item.status %}
+                                                {% if item.status.status == 1 %}  {# Check if status is set to 1 for VIEWED #}
+                                                    <span class="badge badge-success">Viewed</span>
+                                                {% else %}
+                                                    <span class="badge badge-warning">Waiting</span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="badge badge-warning">Waiting</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <!-- Action button -->
+                                            <button class="action-button danger" onclick="confirmDelete({{ item.consultant.id }})">Delete</button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {% if not consultant_list %}
+                            <p>No favorite consultants found.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <br>
+{% endblock content %}
+{% block js %}
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function confirmDelete(consultantId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to remove this consultant from your favorites.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, remove it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // User clicked "Yes, remove it!"
+                deleteFavoriteConsultant(consultantId);
+            }
+        });
+    }
+
+    function deleteFavoriteConsultant(consultantId) {
+        // Send an AJAX request to your delete_favourite_consultant view
+        $.ajax({
+            url: `/delete_favourite_consultant/${consultantId}/`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'success') {
+                    // Consultant removed successfully
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.message,
+                        icon: 'success'
+                    }).then(() => {
+                        // Optionally, you can redirect or perform other actions after success
+                        window.location.reload(); // Reload the page for simplicity
+                    });
+                } else {
+                    // Error occurred
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.message,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle AJAX error
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred while processing your request.',
+                    icon: 'error'
+                });
+            }
+        });
+    }
+</script>
+
+{% endblock js %}

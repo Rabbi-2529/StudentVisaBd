@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <title>IGL Web Ltd.</title>
+  
+    <!-- Fav Icon -->
+    <link rel="icon" href={% static "assets/images/favicon.ico" %} type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&amp;display=swap"
+        rel="stylesheet">
+
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css" integrity="sha512-8RxmFOVaKQe/xtg6lbscU9DU0IRhURWEuiI0tXevv+lXbAHfkpamD4VKFQRto9WgfOJDwOZ74c/s9Yesv3VvIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" integrity="sha512-d0olNN35C6VLiulAobxYHZiXJmq+vl+BGIgAxQtD5+kqudro/xNMvv2yIHAciGHpExsIbKX3iLg+0B6d0k4+ZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!--Fontawesome-->
+    <style>
+        #facebookPluginContainer {
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+            display: none;
+            z-index: 9999; /* Ensure the plugin appears on top of other elements */
+        }
+
+        #toggleFacebookPageBtn.open {
+            bottom: 310px;
+            right: 18px;
+        }
+        #toggleFacebookPageBtn {
+            position: absolute;
+            bottom: 0px;
+            padding: 1px 85px;
+            padding-left: 6px;
+            width: 251px;
+            color: #fff;
+            height: 38px;
+            line-height: 38px;
+            background-color: #3a5897;
+            border: 0;
+            z-index: 9999999;
+            margin-right: -8px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+            background-repeat: repeat-x;
+            background-size: auto;
+            background-position: 0 0;
+            text-decoration: none;
+            right: 10px;
+            border-radius: 3px;
+            transition: bottom 0.3s ease;
+        }
+        #openChatBtn {
+            position: absolute;
+            bottom: 18px;
+            padding: 2px 49px;
+            padding-left: 6px;
+            width: 250px;
+            color: #fff;
+            height: 38px;
+            line-height: 38px;
+            background-color: #3a5897;
+            border: 0;
+            z-index: 9999999;
+            margin-right: -8px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+            background-repeat: repeat-x;
+            background-size: auto;
+            background-position: 0 0;
+            text-decoration: none;
+            right: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        #openChatBtn i {
+            margin-right: 5px;
+        }
+    </style>
+    <!-- Stylesheets -->
+    
+    <link href={% static 'assets/css/font-awesome-all.css'%} rel="stylesheet">
+    <link href={% static "assets/css/flaticon.css"%} rel="stylesheet">
+    <link href={% static "assets/css/owl.css"%} rel="stylesheet">
+    <link href={% static "assets/css/bootstrap.css" %} rel="stylesheet">
+    <link href={% static "assets/css/jquery.fancybox.min.css" %} rel="stylesheet">
+    <link href={% static "assets/css/animate.css"%} rel="stylesheet">
+    <!-- <link href="assets/css/color/theme-color.css" id="jssDefault" rel="stylesheet"> -->
+    <link href={% static "assets/css/switcher-style.css" %} rel="stylesheet">
+    <link href={% static "assets/css/style.css"%} rel="stylesheet">
+    <link href={% static "assets/css/responsive.css" %} rel="stylesheet">
+    {% block custom_css %}{% endblock custom_css %}
+</head>
+
+
+
+
+<body>
+    <div class="boxed_wrapper">
+        <!-- Preloader -->
+        <div class="loader-wrap">
+            <div class="preloader">
+                <div class="preloader-close">Preloader Close</div>
+            </div>
+            <div class="layer layer-one"><span class="overlay"></span></div>
+            <div class="layer layer-two"><span class="overlay"></span></div>
+            <div class="layer layer-three"><span class="overlay"></span></div>
+        </div>
+
+        <header class="main-header style-two">
+            <div class="header-top header-top-advertise">
+                <div class="auto-container">
+                    <div class="top-inner clearfix top-inner-advertise">
+
+                    </div>
+                </div>
+            </div>
+            <div class="header-upper">
+                <div class="auto-container">
+                    <div class="outer-box clearfix">
+                        <div class="logo-box custom-pull pull-left">
+                            <figure class="logo">
+                                <a href={% url "home" %}>
+                                    <img src={% static "assets/images/icon.png"%} alt="">
+                                    <h3>
+                                        STUDENT VISA BD
+                                        <span>
+                                          FIND YOUR CONSULTANT
+                                        </span>
+                                    </h3>
+                                </a>
+                            </figure>
+                        </div>
+                        <div class="menu-area pull-right ">
+                            <!--Mobile Navigation Toggler-->
+                            <div class="mobile-nav-toggler">
+                                <i class="icon-bar"></i>
+                                <i class="icon-bar"></i>
+                                <i class="icon-bar"></i>
+                            </div>
+                            <nav class="main-menu navbar-expand-md navbar-light">
+                                <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
+                                    <ul class="navigation clearfix">
+                                        <li class="{% if request.path == '/' %}current active{% endif %}">
+                                            <a href="{% url 'home' %}">Home</a>
+                                        </li>
+                                        <li class="{% if request.path == '/consultant_list/' %}current active{% endif %}">
+                                            <a href="{% url 'consultant_list' %}">Consultant List</a>
+                                        </li>
+                                        <li class="dropdown {% if request.path == '/consaltant_wise_scholarship/' %}current active{% endif %} {% if request.path == '/country_wise_scholarship/' %}current active{% endif %}"  >
+                                            <a href="#">Scholarship</a>
+                                            <ul>
+                                                <li class="{% if request.path == '/consaltant_wise_scholarship/' %}current active{% endif %}">
+                                                    <a href="{% url 'consaltant_wise_scholarship' %}">Consulatant Wise</a>
+                                                </li>
+                                                <li class="{% if request.path == '/country_wise_scholarship/' %}current active{% endif %}">
+                                                    <a href="{% url 'country_wise_scholarship' %}">Country Wise</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#">How To apply</a>
+                                            <ul>
+                                                <li class="{% if request.path == '/offer_letter/' %}current active{% endif %}">
+                                                    <a href="{% url 'offer_letter' %}">Offer Letter</a>
+                                                </li>
+                                                <li class="{% if request.path == '/by_country/' %}current active{% endif %}">
+                                                    <a href="{% url 'by_country' %}">By Country</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="{% if request.path == '/contact/' %}current active{% endif %}">
+                                            <a href="{% url 'contact' %}">Contact Us</a>
+                                        </li>
+                                        {% if user.is_authenticated %}
+                                      
+                                        <li class="dropdown  mx-4">
+                                            <a href=""><i class="fa-solid fa-user user-icon-base"></i></a>
+                                            <ul class="user_hover">
+                                    
+                                                
+                                                {% if user.user_type == 0 %}
+                                                    <li><a href="{% url 'root_home' %}">My Panel</a></li>
+                                                {% elif user.user_type == 1 %}
+                                                    <li><a href="{% url 'consultant_home' %}">My Panel</a></li>
+                                                {% elif user.user_type == 2 %}
+                                                    <li><a href="{% url 'student_home' %}">My Panel</a></li>
+                                                {% endif %}
+                                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                                            </ul>
+                                        </li>
+                             
+                                        {% else %}
+                                            <li class="dropdown">
+                                                <a href="#">Sign in</a>
+                                                <ul>
+                                                    <li><a href="{% url 'login_student' %}">Student</a></li>
+                                                    <li><a href="{% url 'login_user' %}">Consultant</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a href="#">Signup</a>
+                                                <ul>
+                                                    <li><a href="{% url 'signup_student' %}">Student</a></li>
+                                                    <li><a href="{% url 'signup_user' %}">Consultant</a></li>
+                                                </ul>
+                                            </li>
+                                        {% endif %}
+                                       
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--sticky Header-->
+            <div class="sticky-header">
+                <div class="auto-container">
+                    <div class="outer-box clearfix">
+                        <div class="logo-box pull-left">
+                            <figure class="logo">
+                                <a href={% url "home" %}>
+                                    <img src={% static "assets/images/icon.png"%} alt="">
+                                    <h3>
+                                        STUDENT VISA BD
+                                        <span>
+                                          FIND YOUR CONSULTANT
+                                        </span>
+                                    </h3>
+                            </a>
+                            </figure>
+                        </div>
+                        <div class="menu-area pull-right">
+                            <nav class="main-menu clearfix">
+                                <!--Keep This Empty / Menu will come through Javascript-->
+                            </nav>
+                        </div>
+                        <div class="menu-area pull-right">
+                            <div class="mobile-nav-toggler">
+                                <i class="icon-bar"></i>
+                                <i class="icon-bar"></i>
+                                <i class="icon-bar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- main-header end -->
+
+        <!-- Mobile Menu  -->
+        <div class="mobile-menu">
+            <div class="menu-backdrop"></div>
+            <div class="close-btn"><i class="fas fa-times"></i></div>
+            <nav class="menu-box">
+                <div class="nav-logo">
+                    <a href="#">
+                        <img src={% static "assets/images/logo.png"%} alt="" title="">
+                    </a>
+                </div>
+                <div class="menu-outer">
+                    <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+                </div>
+                <div class="contact-info">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li>House #33A (4th Floor), Road #4, Dhanmondi, Dhaka 1205</li>
+                        <li><a href="tel:+8801682648101">+88 01823037726</a></li>
+                        <li><a href="mailto:info@example.com">info@studentvisabd.com</a></li>
+                    </ul>
+                </div>
+                <div class="social-links">
+                    <ul class="clearfix">
+                        <li><a href="#"><span class="fab fa-twitter"></span></a></li>
+                        <li><a href="#"><span class="fab fa-facebook-square"></span></a></li>
+                        <li><a href="#"><span class="fab fa-pinterest-p"></span></a></li>
+                        <li><a href="#"><span class="fab fa-instagram"></span></a></li>
+                        <li><a href="#"><span class="fab fa-youtube"></span></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        
+{% block content %}
+
+
+{% endblock content %}
+
+
+
+  <!-- main-footer -->
+  <footer class="main-footer bg-color-2">
+    <div class="auto-container">
+        <div class="footer-top">
+            <div class="widget-section">
+                <div class="row clearfix">
+                    <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget logo-widget">
+                            <figure class="footer-logo"><a href="index.html"><img
+                                        src={% static "assets/images/footer.png" %} alt=""></a></figure>
+                            <div class="text">
+                                <p>Student Visa Bd is a sister concern of IGL Group of Company, IGL Web Ltd is an exclusive Web Design, Web Hosting, Web Application, Mobile Apps and Desktop Based Application Provider of Bangladesh in working all over the world since 2007.
+                                </p>
+                            </div>
+
+
+                            <ul class="social-links clearfix">
+                                <li><a href="index.html"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="index.html"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="index.html"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="index.html"><i class="fab fa-google-plus-g"></i></a></li>
+                                <li><a href="index.html"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget links-widget">
+                            <div class="widget-title">
+                                <h3>Our Partner</h3>
+                            </div>
+                            <div class="widget-content">
+
+                                <ul class="list clearfix">
+                                    <li><a href="http://iglweb.com/web/igl_about_us.php" target="_blank"> About IGL Web Ltd</a></li>
+                                    <li><a href="http://iglweb.com/web/igl_mission_vision_goal.php" target="_blank">Mission, Vition &amp; Goal</a></li>
+                                    <li><a href="http://iglweb.com/web/igl_board_of_director.php" target="_blank"> Board of Director</a></li>
+                                    <li><a href="http://iglweb.com/web/igl_board_of_director.php" target="_blank">Board of Adviser</a></li>
+                                    <li><a href="http://iglweb.com/web/igl_board_of_staff.php" target="_blank">Board of Officer/Staff</a></li>     
+                                    <li><a href="#"> Board of Adviser</a></li>
+                                    <li><a href="#"> Board of Officer/Staff</a></li>
+                                    <li><a href="#"> Some of Our Client List</a></li>
+                                    <li><a href="#"> Current Project</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget links-widget">
+                            <div class="widget-title">
+                                <h3>About Us</h3>
+                            </div>
+                            <div class="widget-content">
+                                <ul class="list clearfix">
+                                    <li><a href="index.html">About IGL Web Ltd.</a></li>
+                                    <li><a href="index.html">Why Immigrate</a></li>
+                                    <li><a href="index.html">Service Features</a></li>
+                                    <li><a href="index.html">Study Visas</a></li>
+                                    <li><a href="index.html">Apply As Citizenship</a></li>
+                                    <li><a href="index.html">Immigration Resources</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget links-widget">
+                            <div class="widget-title">
+                                <h3>important Link</h3>
+                            </div>
+                            <div class="widget-content">
+                                <ul class="list clearfix">
+                                    <li><a href="https://unicodeconverter.info" target="_blank"> Bangla Converter</a></li>  
+                                    <li><a href="http://www.passport.gov.bd/" target="_blank"> Passport</a></li>                                                       
+                                    <li><a href="https://bangladesh.gov.bd" target="_blank"> Bangladesh</a></li>                                                        
+                                    <li><a href="http://www.bangladeshpost.gov.bd/find-post-code.html" target="_blank"> Find Postal Code</a></li>
+                                    <li><a href="https://moedu.gov.bd/" target="_blank"> Ministry of Education</a></li>                                                          
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom clearfix">
+            <div class="copyright pull-left">
+                <p>(&copy;) 2023 <a href="index.html">IGL</a> Immigration & Visa Firm. All rights reserved.
+                </p>
+            </div>
+            <ul class="footer-nav pull-right clearfix">
+                <li><a href="index.html">Privacy Policy</a></li>
+                <li><a href="index.html">Sitemap</a></li>
+                <li><a href="index.html">Terms & Conditions</a></li>
+            </ul>
+        </div>
+    </div>
+    
+</footer>
+
+
+<!-- Scroll to top button -->
+<button class="scroll-top scroll-to-target" data-target="html">
+    <i class="fas fa-long-arrow-alt-up"></i>
+</button>
+
+<!-- Add Facebook SDK Initialization without App ID -->
+
+<div id="facebookPluginContainer" class="fb-page" data-href="https://www.facebook.com/StudentVisaBD/" data-tabs="messages" data-width="250" data-height="310" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="false" data-show-posts="true">
+    <blockquote cite="https://www.facebook.com/StudentVisaBD/" class="fb-xfbml-parse-ignore">
+        <a href="https://www.facebook.com/StudentVisaBD/">StudentVisaBD</a>
+    </blockquote>
+</div>
+
+<div id="facebookPluginContainer" class="fb-page" data-href="https://www.facebook.com/StudentVisaBD/" data-tabs="messages" data-width="250" data-height="310" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="false" data-show-posts="true">
+    <blockquote cite="https://www.facebook.com/StudentVisaBD/" class="fb-xfbml-parse-ignore">
+        <a href="https://www.facebook.com/StudentVisaBD/">StudentVisaBD</a>
+    </blockquote>
+</div>
+
+<button id="toggleFacebookPageBtn">
+    <i class="fab fa-facebook-square"></i> <!-- Facebook icon -->
+    Facebook Chat
+    <i class="fas fa-times"></i> <!-- Close (cross) icon -->
+</button>
+
+<script>
+    document.getElementById('toggleFacebookPageBtn').addEventListener('click', function () {
+        var fbPluginContainer = document.getElementById('facebookPluginContainer');
+        var toggleButton = document.getElementById('toggleFacebookPageBtn');
+
+        if (fbPluginContainer.style.display === 'none' || !fbPluginContainer.style.display) {
+            // Show Facebook Chat
+            fbPluginContainer.style.display = 'block';
+            toggleButton.innerText = 'Close Facebook Chat';
+            toggleButton.classList.add('open');
+        } else {
+            // Hide Facebook Chat
+            fbPluginContainer.style.display = 'none';
+            toggleButton.innerText = 'Open Chat';
+            toggleButton.classList.remove('open');
+        }
+
+        // Trigger reparse after toggling the display
+        FB.XFBML.parse();
+    });
+
+    // Add confirmation when closing the page
+    window.addEventListener('beforeunload', function (event) {
+        var fbPluginContainer = document.getElementById('facebookPluginContainer');
+        if (fbPluginContainer.style.display === 'block') {
+            var confirmationMessage = 'Are you sure you want to leave? Your Facebook Chat will be closed.';
+            (event || window.event).returnValue = confirmationMessage; // Standard
+            return confirmationMessage; // IE, Firefox
+        }
+    });
+</script>
+<!-- Include the SDK.js Script without App ID -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0"></script>
+
+<!-- jequery plugins -->
+<script src={% static "assets/js/jquery.js" %}></script>
+<script src={% static "assets/js/popper.min.js" %}></script>
+<script src={% static "assets/js/bootstrap.min.js" %}></script>
+<script src={% static "assets/js/owl.js" %}></script>
+<script src={% static "assets/js/wow.js" %}></script>
+<script src={% static "assets/js/validation.js" %}></script>
+<script src={% static "assets/js/jquery.fancybox.js"%}></script>
+<script src={% static "assets/js/TweenMax.min.js" %}></script>
+<script src={% static "assets/js/appear.js" %}></script>
+<script src={% static "assets/js/scrollbar.js" %}></script>
+<script src={% static "assets/js/jquery.nice-select.min.js" %}></script>
+<script src={% static "assets/js/jQuery.style.switcher.min.js" %}></script>
+
+<!-- main-js -->
+<script src={% static "assets/js/script.js" %}></script>
+{% block js %}{% endblock js %}
+</body><!-- End of .page_wrapper -->
+
+</html>
+                     

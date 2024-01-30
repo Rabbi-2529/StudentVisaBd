@@ -1,0 +1,138 @@
+
+{% extends "base.html" %}
+{% block custom_css %}
+
+{% load static %}
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&amp;display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&amp;display=swap" rel="stylesheet">
+
+<!-- Stylesheets -->
+<link href={% static "assets/css/font-awesome-all.css"%} rel="stylesheet">
+<link href={% static "assets/css/flaticon.css"%} rel="stylesheet">
+<link href={% static "assets/css/owl.css"%} rel="stylesheet">
+<link href={% static "assets/css/bootstrap.css"%} rel="stylesheet">
+<link href={% static "assets/css/jquery.fancybox.min.css"%} rel="stylesheet">
+<link href={% static "assets/css/animate.css"%} rel="stylesheet">
+<link href={% static "assets/css/color/theme-color.css"%} id="jssDefault" rel="stylesheet">
+<link href={% static "assets/css/switcher-style.css"%} rel="stylesheet">
+{% comment %} <link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/responsive.css" rel="stylesheet"> {% endcomment %}
+
+
+{% endblock custom_css %}
+
+{% block content %}
+
+ 
+
+
+
+        <!--Page Title-->
+        {% comment %} <section class="page-title" style="background-image: url({% static 'assets/images/background/page-title.jpg'%});">
+            <div class="auto-container">
+                <div class="content-box">
+                    <div class="title-box">
+                        <h1>Consultant List</h1>
+                        <div class="dotted-box">
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                        </div>
+                    </div>
+                    <ul class="bread-crumb clearfix">
+                        <li><i class="flaticon-home-1"></i><a href="index.html">Home</a></li>
+                        <li>List</li>
+                    </ul>
+                </div>
+            </div>
+        </section> {% endcomment %}
+        <!--End Page Title-->
+
+
+        <!-- team-section -->
+        <div class="container">
+            <section class="page-title" style="background-image: url({% static 'assets/images/background/page-title.jpg' %});">
+                <div class="auto-container">
+                    <div class="content-box">
+                        <div class="title-box">
+                            <h1>Elements</h1>
+                            <div class="dotted-box">
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                            </div>
+                        </div>
+                        <ul class="bread-crumb clearfix">
+                            <li><i class="flaticon-home-1"></i><a href="index.html">Home</a></li>
+                            <li>{{ consultant.company_name }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <!--End Page Title-->
+    
+    
+            <!-- about-section -->
+            <section class="about-section">
+                <div class="pattern-layer" style="background-image: url({% static 'assets/images/shape/pattern-1.png' %});"></div>
+                <div class="auto-container">
+                    <div class="row align-items-center clearfix">
+                        <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                            <div id="image_block_1">
+                                <div class="image-box">
+                                    <figure class="image"><img src={% static "assets/images/resource/about-1.jpg" %} alt=""></figure>
+                                    <div class="box">
+                                        <div class="inner">
+                                            <div class="icon-box">
+                                                <div class="icon icon-1"></div>
+                                                <div class="icon icon-2"></div>
+                                            </div>
+                                            <span>Bangladeshi Leading Visa & Immigration Consulatant with</span>
+                                            <h1>{{consultant_details.experience}}</h1>
+                                            <p>Years Of Experience</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                            <div id="content_block_1">
+                                <div class="content-box">
+                                    <div class="sec-title">
+                                        <p>who are {{ consultant.company_name }}</p>
+                                        <H2><span>{{ consultant_details.consultant_intro|safe }}</span></H2>
+                                        <div class="dotted-box">
+                                            <span class="dotted"></span>
+                                            <span class="dotted"></span>
+                                            <span class="dotted"></span>
+                                        </div>
+                                    </div>
+                                    {% comment %} <div class="bold-text">
+                                        <p>{{ consultant_details.consultant_description|safe }}</p>
+                                    </div> {% endcomment %}
+                                    <div class="text">
+                                        <p>{{ consultant_details.consultant_description|safe }}
+                                            .....
+                                        </p>
+                                    </div>
+                                    <div class="btn-box">
+                                        <a href="{% url 'singel_consultant_page'  consultant_id=consultant.id %}" class="theme-btn-two" target="_blank">Learn More<i class="flaticon-send"></i></a>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- team-section end -->
+        </div>
+
+
+{% endblock content %}
+
+{% block content_js %}
+
+
+{% endblock content_js %}

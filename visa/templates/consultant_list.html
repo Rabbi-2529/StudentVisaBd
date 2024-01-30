@@ -1,0 +1,421 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block custom_css %}
+<link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&amp;display=swap" rel="stylesheet">
+<link href="{% static 'assets/css/font-awesome-all.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/flaticon.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/owl.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/jquery.fancybox.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/animate.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/color/theme-color.css' %}" id="jssDefault" rel="stylesheet">
+<link href="{% static 'assets/css/switcher-style.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet">
+<link href="{% static 'assets/css/feedback.css' %}" rel="stylesheet">
+
+<link href={% static "assets/css/consultant_list.css" %} rel="stylesheet">
+{% endblock custom_css %}
+
+{% block content %}
+        <!--Page Title-->
+        {% comment %} <section class="page-title" style="background-image: url({% static 'assets/images/background/page-title.jpg'%});">
+            <div class="auto-container">
+                <div class="content-box">
+                    <div class="title-box">
+                        <h1>Consultant List</h1>
+                        <div class="dotted-box">
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                            <span class="dotted"></span>
+                        </div>
+                    </div>
+                    <ul class="bread-crumb clearfix">
+                        <li><i class="flaticon-home-1"></i><a href="index.html">Home</a></li>
+                        <li>List</li>
+                    </ul>
+                </div>
+            </div>
+        </section> {% endcomment %}
+        <!--End Page Title-->
+
+
+        <!-- team-section -->
+        <div class="container">
+            <section class="page-title" style="background-image: url({% static 'assets/images/background/page-title.jpg'%});">
+                <div class="auto-container">
+                    <div class="content-box">
+                        <div class="title-box">
+                            <h1>Consultant List</h1>
+                            <div class="dotted-box">
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                            </div>
+                        </div>
+                        <ul class="bread-crumb clearfix">
+                            <li><i class="flaticon-home-1"></i><a href="index.html">Home</a></li>
+                            <li>List</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <div class="search-content search-right mb-1">
+                <div class="search-box-nav d-flex justify-content-end">
+                    <div class="search-field-div col-lg-4 col-md-4 col-12">
+                        <input id="search-input" type="text" placeholder="Search Consultant" class="search-input" autocomplete="off">
+                        <button type="button" class="search-toggler search-icon-btn"><i class="fa-solid fa-magnifying-glass search-icon"></i></button>
+                        <!-- <a href="index-2.html" class="theme-btn-two">Daftar Online<i class="flaticon-send"></i></a> -->
+                    </div>
+                </div>
+            </div>
+            {% if search_input or rating_filter or country_filter or experience_filter %}
+                <section class="team-section">
+                    <div class="auto-container">
+                        <div class="row">
+                            {% if chunked_consultants %}
+                                {% for chunk in chunked_consultants %}
+                                    {% comment %} {% if chunk %} {% endcomment %}
+                                        {% comment %} {% for consultant_dict in chunk %} {% endcomment %}
+                                            {% with consultant=chunk.consultant details=chunk.details %}
+                                                {% if consultant and details %}
+                                                    <div class="search-team-block-one">
+                                                        <div class="inner-box">
+                                                            <figure class="image-box" style="height: 200px;">
+                                                                {% comment %} {% if details and details.consultant_logo %} {% endcomment %}
+                                                                {% comment %} {% for consultant_detail in consultant_details %} {% endcomment %}
+                                                                {% if details and details.consultant_logo %}
+                                                                    <img src="{{ details.consultant_logo.url }}" alt="{{ consultant.company_name }}" class="img-fluid mb-2">
+                                                                {% else %}
+                                                                    <img src="{% static 'assets/images/images.jpg' %}" alt="Demo Image">
+                                                                {% endif %}
+                                                                {% comment %} {% endfor %} {% endcomment %}
+                                                                {% comment %} {% endif %} {% endcomment %}
+                                                                <ul class="social-links clearfix">
+                                                                    <!--<span class="fa fa-star checked"></span>
+                                                                    <span class="fa fa-star checked"></span>
+                                                                    <span class="fa fa-star checked"></span>
+                                                                    <span class="fa fa-star"></span>
+                                                                    <span class="fa fa-star"></span>-->
+
+                                                                    <div class="review-stars" data-rating="{{ consultant.rating }}">
+                                                                        {% comment %} {% if 0 < chunk.rating < 1 %} {% endcomment %}
+                                                                            <i class="fa-solid fa-star rating-star rating-star-1"></i>
+                                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-1"></i>
+                                                                            <i class="fa-solid fa-star rating-star rating-star-2"></i>
+                                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-2"></i>
+                                                                            <i class="fa-solid fa-star rating-star rating-star-3"></i>
+                                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-3"></i>
+                                                                            <i class="fa-solid fa-star rating-star rating-star-4"></i>
+                                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-4"></i>
+                                                                            <i class="fa-solid fa-star rating-star rating-star-5"></i>
+                                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-5"></i>
+                                
+                                                                            {% comment %} <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-1"></i>
+                                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-2"></i>
+                                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-3"></i>
+                                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-4"></i>
+                                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-5"></i> {% endcomment %}
+                                                                        {% comment %} {% elif 0 < consultant.rating < 1 %}
+                                
+                                                                        {% endif %} {% endcomment %}
+                                                                    </div>
+                                                                </ul>
+                                                            </figure>
+                                                            <div class="lower-content">
+                                                                <h4><a href="{% url 'singel_consultant_details' consultant_id=consultant.id %}">{{ consultant.company_name }}</a></h4>
+                                                                {% comment %} <h4>{{consultant.email}}</h4> {% endcomment %}
+                                                                <span class="designation">{{ consultant.address }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endwith %}
+                                        {% comment %} {% endfor %} {% endcomment %}
+                                    {% comment %} {% endif %} {% endcomment %}
+                                {% endfor %}
+                            {% else %}
+                            <div class="row justify-content-center">
+                                <h1 class="text-center">No details found for the consultant</h1>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+                
+            {% else %}
+            {% for chunk in chunked_consultants %}
+            <section class="team-section">
+                <div class="auto-container">
+                    <div class="four-item-carousel owl-carousel owl-theme owl-dots-none owl-nav-none">
+                        {% for consultant_dict in chunk %}
+                            {% with consultant=consultant_dict.consultant details=consultant_dict.details %}
+                                {% if consultant %}
+                                    <div class="team-block-one">
+                                        <div class="inner-box">
+                                            <figure class="image-box" style="height: 200px;">
+                                                {% if details and details.consultant_logo %}
+                                                    <img src="{{ details.consultant_logo.url }}" alt="{{ consultant.company_name }}" class="img-fluid mb-2">
+                                                {% else %}
+                                                    <img src="{% static 'assets/images/images.jpg' %}" alt="Demo Image">
+                                                {% endif %}
+                                                <ul class="social-links clearfix">
+                                                    <div class="review-stars" data-rating="{{ consultant.rating }}">
+                                                        {% comment %} {% if 0 < consultant.rating < 1 %} {% endcomment %}
+                                                            <i class="fa-solid fa-star rating-star rating-star-1"></i>
+                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-1"></i>
+                                                            <i class="fa-solid fa-star rating-star rating-star-2"></i>
+                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-2"></i>
+                                                            <i class="fa-solid fa-star rating-star rating-star-3"></i>
+                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-3"></i>
+                                                            <i class="fa-solid fa-star rating-star rating-star-4"></i>
+                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-4"></i>
+                                                            <i class="fa-solid fa-star rating-star rating-star-5"></i>
+                                                            <i class="fa-solid fa-star-half-stroke half-rating-star half-rating-star-5"></i>
+                
+                                                       
+                                                    </div>
+                                                </ul>
+                                            </figure>
+                                            <div class="lower-content">
+                                                <h4><a href="{% url 'singel_consultant_details' consultant_id=consultant.id %}">{{ consultant.company_name }}</a></h4>
+                                                <span class="designation">{{ consultant.address }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+            {% endif %}
+            <!-- team-section end -->
+        </div>
+
+        <!-- search-popup -->
+        <div id="search-popup" class="search-popup">
+            <div class="close-search"><span>Close</span></div>
+            <div class="popup-inner">
+                <div class="overlay-layer"></div>
+                <div class="search-form">
+                    <form method="GET">
+                        <div class="form-group popup-search-field-div">
+                            <fieldset>
+                                <input type="text" class="form-control popup-search-input" name="search_area" value="{{search_input}}"
+                                    placeholder="Search Here">
+                                {% comment %} <input type="submit" value="Search Now!" class="theme-btn style-four"> {% endcomment %}
+                                <button type="submit" class="popup-search-btn style-four">Search</button>
+                            </fieldset>
+                        </div>
+
+                        {% comment %} <h3>Recent Search Keywords</h3> {% endcomment %}
+                    <!--<ul class="recent-searches">
+                        <li><a href="index.html">Finance</a></li>
+                        <li><a href="index.html">Idea</a></li>
+                        <li><a href="index.html">Service</a></li>
+                        <li><a href="index.html">Growth</a></li>
+                        <li><a href="index.html">Plan</a></li>
+                    </ul>-->
+
+                    <div class="">
+                        <h4 class="text-center mb-3" style="color: white;">Filter Search</h4>
+                        <hr>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                                <label for="" style="color: white;">Sort by Rating</label>
+                                <div class="select-box">
+                                    <select class="wide" name="rating_filter">
+                                        <option value="">Default</option>
+                                       <option value="high">Highest to Lowest</option>
+                                       <option value="low">Lowest to Highest</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                                <label for="" style="color: white;">Filter by Country</label>
+                                <div class="select-box">
+                                    {% comment %} <input type="text" id="searchInput" placeholder="Search..."> {% endcomment %}
+                                    <select class="wide" name="country_filter">
+                                        {% comment %} <option data-display="Select"><input type="text" id="searchInput" placeholder="Search..."></option> {% endcomment %}
+                                        <option data-display="Select" value="">Select Country</option>
+                                        {% for country in countries %}
+                                                <option value="{{ country.country_id }}">{{ country.country_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                                <label for="" style="color: white;">Filter by Experience</label>
+                                <div class="select-box">
+                                    <select class="wide" name="experience_filter">
+                                        <option value="">Default</option>
+                                       <option value="high">Most Experience</option>
+                                       <option value="low">Least Experience</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- search-popup end -->
+
+
+{% endblock content %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    {% comment %} <script>
+        $(document).ready(function () {
+            $('.nice-select:eq(1)').attr('id', 'countryDropdown');
+            var isSearchInputVisible = false;
+            // Function to filter options based on input
+            function filterOptions() {
+                var input, filter, select, options, option, i, txtValue;
+                input = $("#searchInput");
+                filter = input.val().toUpperCase();
+                select = $("#countryDropdown");
+                options = select.find("option");
+    
+                for (i = 1; i < options.length; i++) {
+                    option = $(options[i]);
+                    txtValue = option.text();
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        option.show();
+                    } else {
+                        option.hide();
+                    }
+                }
+            }
+    
+            // Toggle visibility of search input on dropdown click
+            $("#countryDropdown").on("click", function () {
+                console.log('Dropdown clicked');
+
+                // Check if the search input is currently visible
+                if (!isSearchInputVisible) {
+                    // Add the search input dynamically when the dropdown is clicked
+                    var searchInput = $("<input type='text' id='searchInput' placeholder='Search...'>");
+                    searchInput.on("input", filterOptions);
+                    $(this).parent().prepend(searchInput);
+
+                    // Update the variable to indicate that the search input is now visible
+                    isSearchInputVisible = true;
+                } else {
+                    // If the search input is already visible, remove it
+                    $("#searchInput").remove();
+
+                    // Update the variable to indicate that the search input is now hidden
+                    isSearchInputVisible = false;
+                }
+            });
+    
+            // Remove the search input when clicking outside the dropdown or search input
+            $(document).on("click", function (event) {
+                var target = $(event.target);
+                if (!target.closest("#countryDropdown").length && !target.is("#searchInput")) {
+                    $("#searchInput").remove();
+                }
+            });
+        });
+    </script> {% endcomment %}
+
+    <script>
+        $(document).ready(function() {
+            //Search Popup
+            if($('#search-popup').length){
+                
+                //Show Popup
+                $('.search-input').on('click focus', function() {
+                    $('#search-popup').addClass('popup-visible');
+                });
+                $(document).keydown(function(e){
+                    if(e.keyCode === 27) {
+                        $('#search-popup').removeClass('popup-visible');
+                    }
+                });
+                //Hide Popup
+                $('.close-search,.search-popup .overlay-layer').on('click', function() {
+                    $('#search-popup').removeClass('popup-visible');
+                });
+            }
+            /*// Set the rating value (replace this with your actual rating value)
+            var rating_str = '{{ consultant.rating }}';
+            var rating = parseFloat(rating_str);
+            console.log('rating on load: ', rating)
+            console.log('rating on load: ', typeof(rating))
+
+            if(rating > 0){
+                // Calculate the number of full stars
+                var fullStars = Math.floor(rating);
+                
+                // Add the show-star class to full stars
+                for (var i = 1; i <= fullStars; i++) {
+                    $('.rating-star-' + i).addClass('show-star');
+                }
+
+                // Check if there is a half star
+                if (rating % 1 !== 0) {
+                    var halfStarPosition = fullStars + 1;
+                    $('.half-rating-star-' + halfStarPosition).addClass('show-star');
+                }
+
+                // Remove show-star class from the remaining stars
+                for (var j = fullStars + 2; j <= 5; j++) {
+                    $('.rating-star-' + j).addClass('show-unrated-star');
+                }
+            }
+            else{
+                // Remove show-star class from the remaining stars
+                for (var j = 1; j <= 5; j++) {
+                    $('.rating-star-' + j).addClass('show-unrated-star');
+                }
+            }
+
+            for (let i = 1; i <= studentRating; i++) {
+                $(`.star[data-value="${i}"]`).addClass('star-active');
+            }*/
+            
+            // Iterate through each consultant
+            $('.review-stars').each(function() {
+                // Get the rating value for each consultant
+                var rating_str = $(this).data('rating');
+                var rating = parseFloat(rating_str);
+                console.log('rating star: ', rating)
+
+                // Add star classes based on the rating
+                if (rating > 0) {
+                    var fullStars = Math.floor(rating);
+
+                    for (var i = 1; i <= fullStars; i++) {
+                        $(this).find('.rating-star-' + i).addClass('show-star');
+                    }
+
+                    if (rating % 1 !== 0) {
+                        var halfStarPosition = fullStars + 1;
+                        $(this).find('.half-rating-star-' + halfStarPosition).addClass('show-star');
+                    }
+
+                    for (var j = fullStars + 2; j <= 5; j++) {
+                        $(this).find('.rating-star-' + j).addClass('show-unrated-star');
+                    }
+                } else {
+                    for (var j = 1; j <= 5; j++) {
+                        $(this).find('.rating-star-' + j).addClass('show-unrated-star');
+                    }
+                }
+            });
+        });
+    </script>
+
+{% endblock js %}

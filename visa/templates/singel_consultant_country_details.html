@@ -1,0 +1,60 @@
+{% extends 'consultant_base.html' %} {% load static %}
+
+{% block content %}
+        <!-- End Mobile Menu -->
+
+
+        <div class="container">
+            <section class="page-title " style="background-image: url({% static 'assets/images/background/page-title.jpg' %});">
+                <div class="auto-container">
+                    <div class="content-box my-2">
+                        <div class="title-box">
+                            <h1>Country</h1>
+                            <div class="dotted-box">
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                            </div>
+                        </div>
+                        <ul class="bread-crumb clearfix">
+                            <li><i class="flaticon-home-1"></i><a href="{% url 'singel_consultant_page' consultant_id=consultant.id %}">Home</a></li>
+                            <li>{{consultant.company_name}}</li>
+                            <li>Country</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section class="immigration-section">
+                <div class="auto-container">
+                    <div class="row clearfix">
+                        {% for country in consultant_countries %}
+                            <div class="col-lg-4 col-md-6 col-sm-12 immigration-block">
+                                <div class="immigration-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                    <div class="inner-box">
+                                        <figure class="image-box">
+                                            <!-- Assuming you have a field named 'country_flag' in your Countries model -->
+                                            <img src="{% static 'assets/countries/flags/' %}{{ country.country_flag}}" alt="">
+                                        </figure>
+                                        <div class="text">
+                                            <!-- Assuming you have a field named 'country_name' in your Countries model -->
+                                            <h3><a href="{% url 'singel_consultant_country_details' consultant_id=consultant_details.consultant_id country_id=country.country_id %}">{{ country.country_name }}</a></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                   
+                    <div class="pagination-wrapper centred">
+                        <ul class="pagination">
+                            <li><a href="blog.html" class="active">1</a></li>
+                            <li><a href="blog.html">2</a></li>
+                            <li><a href="blog.html">3</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+      </div>
+        {% endblock content %}
+        

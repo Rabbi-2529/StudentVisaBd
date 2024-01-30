@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block custom_css %}
+<link href="{% static "assets/css/signup.css"%}" rel="stylesheet">
+{% endblock custom_css %}
+{% block content %}
+    <div class="container col-12 my-4" id="container">
+        <div class="form-container sign-in-container">
+            <form id="login-form" method="POST" action="">
+                {% csrf_token %}
+                <h1>Sign in</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your account</span>
+                <!--Error meesage div starts-->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{% if message.tags == 'error' %}error-message{% endif %}" style="color: red !important">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <!--Error meesage div ends-->
+                <div class="w-100">
+                    <input type="email" name="email" placeholder="Email" />
+                </div>
+                <div class="eye-div w-100">
+                    <input type="password" name="password" placeholder="Password" />
+                    <span class="password-toggle" id="password-toggle-eye">
+                        <i class="fa-regular fa-eye-slash"></i>
+                    </span>
+                </div>
+                {% if request.resolver_match.url_name == 'login_student' %}
+                    <a href="{% url 'forgot_password_phone_or_email_student' %}" class="mb-1">Forgot your password?</a>
+                {% elif request.resolver_match.url_name == 'login_user' %}
+                    <a href="{% url 'forgot_password_phone_or_email' %}" class="mb-1">Forgot your password?</a>
+                {% endif %}
+
+                <p class="mt-1">Don't have an account?</span>
+                    {% if request.resolver_match.url_name == 'login_student' %}
+                        <a href="{% url 'signup_student' %}" style="color: blue; font-weight: 600;">Sign Up</a>
+                    {% elif request.resolver_match.url_name == 'login_user' %}
+                        <a href="{% url 'signup_user' %}" style="color: blue; font-weight: 600;">Sign Up</a>
+                    {% endif %}
+                </p>
+                <button class="signup-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block js %}
+    <script>
+        $(document).ready(function() {
+            $('.password-toggle').click(function () {
+                console.log('eye icon clicked');
+                var passwordInput = $(this).siblings('input');
+                if (passwordInput.attr('type') === 'password') {
+                    passwordInput.attr('type', 'text');
+                    $(this).find('i').removeClass('fa-eye-slash').addClass('fa-eye');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    $(this).find('i').addClass('fa-eye-slash').removeClass('fa-eye');
+                }
+            });
+        });
+    </script>
+{% endblock js %}
+
+

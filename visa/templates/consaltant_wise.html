@@ -1,0 +1,101 @@
+{% extends 'base.html' %} {% load static %}
+
+{% block content %}
+
+        <div class="container">
+            <!--Page Title-->
+            <section class="page-title" style="background-image: url({% static 'assets/images/background/page-title.jpg' %});">
+                <div class="auto-container">
+                    <div class="content-box">
+                        <div class="title-box">
+                            <h1>Scholarship</h1>
+                            <div class="dotted-box">
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                                <span class="dotted"></span>
+                            </div>
+                        </div>
+                        <ul class="bread-crumb clearfix">
+                            <li><i class="flaticon-home-1"></i><a href="index.html">Home</a></li>
+                            <li>Consulatant Wise</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="service-style-two service-page-1 bg-color-3">
+                <div class="auto-container">
+                    <div class="row clearfix justify-content-center">
+                        {% for scholarship in scholarships %}
+                        <div class="col-lg-4 col-md-4 col-sm-6 service-block">
+                            <div class="service-block-two">
+                                <div class="inner-box">
+                                    <figure class="image-box">
+                                        <a href="service-details.html">
+                                            <img src="{% static 'assets/images/service/service-' %}{{ forloop.counter|add:"0" }}.jpg" alt="">
+                                        </a>
+                                    </figure>
+                                    <div class="lower-content">
+                                        <div class="box">
+                                            <div class="icon-box"><i class="flaticon-flight-2"></i></div>
+                                            {% for consultant in consultant_users %}
+                                                {% if consultant.id == scholarship.consultant_id %}
+                                                    <h3><a href="{% url 'scholarship_singel_page' scholarship_id=scholarship.id %}">Scholarship From {{ consultant.company_name }}</a></h3>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <p>{{ scholarship.schp_description|truncatewords:11|safe }}</p>
+                                        </div>
+                                        <div class="link"><a href="{% url 'scholarship_singel_page' scholarship_id=scholarship.id %}">Read More<i class="flaticon-send"></i></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                            <div class="clearfix"></div>
+                            <div class="row-images">
+                                {% for i in "1234" %}
+                                    <img src="{% static 'assets/images/service/service-' %}{{ forloop.parentloop.counter|add:"-1"|add:i }}.jpg" alt="Image {{ i }}">
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <!-- feature-section end -->
+
+
+            <!-- main-footer end -->
+
+
+            <!--Scroll to top-->
+            <button class="scroll-top scroll-to-target" data-target="html">
+                <i class="fas fa-long-arrow-alt-up"></i>
+            </button>
+    </div>
+
+
+
+
+    {% endblock content %}
+    {% block content_js %}
+
+
+    {% comment %} <!-- jequery plugins -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/wow.js"></script>
+    <script src="assets/js/validation.js"></script>
+    <script src="assets/js/jquery.fancybox.js"></script>
+    <script src="assets/js/TweenMax.min.js"></script>
+    <script src="assets/js/appear.js"></script>
+    <script src="assets/js/scrollbar.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/jQuery.style.switcher.min.js"></script>
+
+    <!-- main-js -->
+    <script src="assets/js/script.js"></script> {% endcomment %}
+    {% endblock content_js %}
